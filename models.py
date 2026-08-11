@@ -27,6 +27,7 @@ class UserRole(str, enum.Enum):
     ADMIN = "admin"
     ADMINISTRATOR = "ADMINISTRATOR"
     HEAD = "HEAD"
+    PROFESSIONAL = "PROFESSIONAL"
 
 class User(Base):
     __tablename__ = "users"
@@ -101,7 +102,7 @@ class Milestone(Base):
 
 class Task(Base):
     __tablename__ = "tasks"
-
+    
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     project_id = Column(UUID(as_uuid=True), ForeignKey("projects.id"), nullable=False)
     
@@ -123,7 +124,7 @@ class Task(Base):
     
     story_points = Column(Integer, nullable=True)
     estimated_effort_hours = Column(Integer, nullable=False)
-    manual_progress = Column(Integer, nullable=True)  # Adicionado progresso manual
+    manual_progress = Column(Integer, nullable=True)
     start_date = Column(Date, nullable=True)
     end_date = Column(Date, nullable=True)
     due_date = Column(Date, nullable=True)
@@ -136,7 +137,7 @@ class Task(Base):
 
 class TaskComment(Base):
     __tablename__ = "task_comments"
-
+    
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     task_id = Column(UUID(as_uuid=True), ForeignKey("tasks.id", ondelete="CASCADE"), nullable=False)
     author_user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
@@ -168,8 +169,7 @@ class TimeLog(Base):
     
     entry_type = Column(Enum("REGULAR", "ADDITIONAL", "OVERTIME", name="timelog_entry_type", create_type=False), default="REGULAR")
     
-    approval_status = Column(Enum("PENDING", "APPROVED", "REJECTED", name="approval_status_enum", create_type=False), default="PENDING")
-        
+    approval_status = Column(Enum("PENDING", "APPROVED", "REJECTED", "REVISION_REQUESTED", name="approval_status_enum", create_type=False), default="PENDING")
     approved_by = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=True)
     approved_at = Column(DateTime(timezone=True), nullable=True)
     rejection_reason = Column(Text, nullable=True)

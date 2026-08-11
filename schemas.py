@@ -5,8 +5,7 @@ from datetime import date, datetime, time
 from uuid import UUID
 from decimal import Decimal
 
-# Lista de papéis válidos atualizada com "HEAD"
-VALID_USER_ROLES = ["user", "manager", "admin", "ADMINISTRATOR", "HEAD"]
+VALID_USER_ROLES = ["user", "manager", "admin", "ADMINISTRATOR", "HEAD", "PROFESSIONAL", "PROJECT_MANAGER"]
 
 # --- USUÁRIOS ---
 class UserCreate(BaseModel):
